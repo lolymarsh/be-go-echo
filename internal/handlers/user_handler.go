@@ -41,7 +41,7 @@ func (c *Handler) LoginUser(ctx echo.Context) error {
 		return common.HandleError(ctx, err, fiber.StatusBadRequest)
 	}
 
-	authToken, dataService, err := c.sv.UserService().LoginUser(request)
+	dataService, authToken, err := c.sv.UserService().LoginUser(request)
 	if err != nil {
 		return common.HandleError(ctx, err)
 	}

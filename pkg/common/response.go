@@ -1,6 +1,7 @@
 package common
 
 import (
+	"fmt"
 	"maps"
 	"net/http"
 
@@ -10,8 +11,15 @@ import (
 
 func HandleError(c echo.Context, err error, customCode ...int) error {
 	code := http.StatusBadRequest
+	errorMessage := err.Error()
+
 	if he, ok := err.(*echo.HTTPError); ok {
 		code = he.Code
+		if msg, ok := he.Message.(string); ok {
+			errorMessage = msg
+		} else {
+			errorMessage = fmt.Sprintf("%v", he.Message)
+		}
 	}
 
 	if len(customCode) > 0 {
@@ -19,7 +27,7 @@ func HandleError(c echo.Context, err error, customCode ...int) error {
 	}
 
 	return c.JSON(code, map[string]any{
-		"error":   err.Error(),
+		"error":   errorMessage,
 		"code":    code,
 		"message": "error",
 		"success": false,
