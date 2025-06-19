@@ -5,7 +5,7 @@ CREATE TABLE users (
     username VARCHAR(255) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    role VARCHAR(255) NOT NULL,
+    role ENUM('ADMIN', 'USER') NOT NULL,
     is_active BOOLEAN NOT NULL,
     created_at BIGINT NOT NULL,
     updated_at BIGINT NOT NULL,
