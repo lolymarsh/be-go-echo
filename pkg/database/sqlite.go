@@ -2,14 +2,14 @@ package database
 
 import (
 	"fmt"
-	"lolymarsh/pkg/config"
+	"lolymarsh/pkg/configs"
 	"time"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func InitDatabaseSQLite(conf *config.DatabaseConfigs) (*sqlx.DB, error) {
+func InitDatabaseSQLite(conf *configs.DatabaseConfigs) (*sqlx.DB, error) {
 	dsn := conf.Name // For SQLite, the DSN is typically just the file path or ":memory:" for in-memory DB
 
 	db, err := sqlx.Connect("sqlite3", dsn)

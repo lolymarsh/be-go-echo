@@ -1,4 +1,4 @@
-package config
+package configs
 
 type AuthConfigs struct {
 	SecretKey   string

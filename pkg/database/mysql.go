@@ -2,14 +2,14 @@ package database
 
 import (
 	"fmt"
-	"lolymarsh/pkg/config"
+	"lolymarsh/pkg/configs"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )
 
-func InitDatabaseMySQL(conf *config.DatabaseConfigs) (*sqlx.DB, error) {
+func InitDatabaseMySQL(conf *configs.DatabaseConfigs) (*sqlx.DB, error) {
 
 	dsn := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s?parseTime=true",
