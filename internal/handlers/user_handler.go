@@ -46,7 +46,7 @@ func (c *Handler) LoginUser(ctx echo.Context) error {
 		return common.HandleError(ctx, err)
 	}
 
-	return common.HandleSuccess(ctx, fiber.StatusCreated, "register success", fiber.Map{
+	return common.HandleSuccess(ctx, fiber.StatusCreated, "login success", fiber.Map{
 		"data":       dataService,
 		"auth_token": authToken,
 	})
