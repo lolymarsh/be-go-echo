@@ -11,12 +11,12 @@ type ServiceAction interface {
 	UserService() UserService
 }
 
-type service struct {
+type Service struct {
 	conf *configs.Config
 	db   *sqlx.DB
 	repo repositories.RepositoryAction
 }
 
 func NewService(conf *configs.Config, db *sqlx.DB, repo repositories.RepositoryAction) ServiceAction {
-	return &service{conf: conf, db: db, repo: repo}
+	return &Service{conf: conf, db: db, repo: repo}
 }

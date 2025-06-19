@@ -16,13 +16,14 @@ import (
 type UserService interface {
 	RegisterUser(req *request.RegisterRequest) (*entity.UserEntity, error)
 	LoginUser(req *request.LoginRequest) (*entity.UserEntity, *string, error)
+	FilterUser(req *common.FilterRequest) ([]*entity.UserEntity, int64, error)
 }
 
-func (sv *service) UserService() UserService {
+func (sv *Service) UserService() UserService {
 	return sv
 }
 
-func (sv *service) RegisterUser(req *request.RegisterRequest) (*entity.UserEntity, error) {
+func (sv *Service) RegisterUser(req *request.RegisterRequest) (*entity.UserEntity, error) {
 
 	reqGetUser := &common.Filters{
 		Field: "username",
@@ -70,7 +71,7 @@ func (sv *service) RegisterUser(req *request.RegisterRequest) (*entity.UserEntit
 	return listInput, nil
 }
 
-func (sv *service) LoginUser(req *request.LoginRequest) (*entity.UserEntity, *string, error) {
+func (sv *Service) LoginUser(req *request.LoginRequest) (*entity.UserEntity, *string, error) {
 
 	reqGetUser := &common.Filters{
 		Field: "username",
@@ -114,7 +115,7 @@ func checkPasswordHash(password, hash string) bool {
 	return err == nil
 }
 
-func (s *service) generateTokenAuth(user *entity.UserEntity) (*string, error) {
+func (s *Service) generateTokenAuth(user *entity.UserEntity) (*string, error) {
 	conf := s.conf.Auth
 	claims := jwt.MapClaims{
 		"user_id":    user.UserID,
@@ -135,4 +136,14 @@ func (s *service) generateTokenAuth(user *entity.UserEntity) (*string, error) {
 	}
 
 	return &tokenString, nil
+}
+
+func (s *Service) FilterUser(req *common.FilterRequest) ([]*entity.UserEntity, int64, error) {
+
+	listData, totalData, err := s.repo.UserRepository().FilterUser(req)
+	if err != nil {
+		return nil, -1, common.HandleErrorService("FilterUser", http.StatusBadRequest, "Failed to get user by filter", err)
+	}
+
+	return listData, totalData, nil
 }

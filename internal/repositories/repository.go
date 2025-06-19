@@ -8,10 +8,10 @@ type RepositoryAction interface {
 	UserRepository() UserRepository
 }
 
-type repository struct {
+type Repository struct {
 	db *sqlx.DB
 }
 
 func NewRepository(db *sqlx.DB) RepositoryAction {
-	return &repository{db: db}
+	return &Repository{db: db}
 }

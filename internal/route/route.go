@@ -10,5 +10,5 @@ import (
 const API_V1 = "/api/v1"
 
 func NewRouter(app *echo.Echo, hand *handlers.Handler, midd *middlewares.Middleware) {
-	authRoutes(app, hand, midd)
+	userRoutes(app, hand, midd)
 }

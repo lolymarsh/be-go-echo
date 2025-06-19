@@ -51,3 +51,25 @@ func (c *Handler) LoginUser(ctx echo.Context) error {
 		"auth_token": authToken,
 	})
 }
+
+func (c *Handler) FilterUser(ctx echo.Context) error {
+	request := &common.FilterRequest{}
+
+	if err := ctx.Bind(request); err != nil {
+		return common.HandleError(ctx, errors.New("failed to parse request body"), fiber.StatusBadRequest)
+	}
+
+	if err := c.validate.Struct(request); err != nil {
+		return common.HandleError(ctx, err, fiber.StatusBadRequest)
+	}
+
+	dataService, totalDataService, err := c.sv.UserService().FilterUser(request)
+	if err != nil {
+		return common.HandleError(ctx, err)
+	}
+
+	return common.HandleSuccess(ctx, fiber.StatusCreated, "login success", fiber.Map{
+		"data":       dataService,
+		"total_data": totalDataService,
+	})
+}
