@@ -5,7 +5,7 @@ import (
 )
 
 type RepositoryAction interface {
-	NewUserRepository() UserRepository
+	UserRepository() UserRepository
 }
 
 type repository struct {

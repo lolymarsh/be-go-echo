@@ -1,5 +1,11 @@
 package common
 
+import (
+	"strings"
+
+	"github.com/go-playground/validator/v10"
+)
+
 type FilterRequest struct {
 	Filters  []*Filters `json:"keywords" validate:"dive"`
 	SortName string     `json:"sort_name" validate:"omitempty"`
@@ -13,4 +19,17 @@ type Filters struct {
 	Value       string `json:"value"`
 	GreaterThan int64  `json:"greater_than" validate:"omitempty"`
 	LessThan    int64  `json:"less_than" validate:"omitempty"`
+}
+
+func InitValidate() *validator.Validate {
+	validate := validator.New()
+
+	validate.RegisterValidation("trim", func(fl validator.FieldLevel) bool {
+		field := fl.Field().String()
+		trimmed := strings.Join(strings.Fields(field), "")
+		fl.Field().SetString(trimmed)
+		return true
+	})
+
+	return validate
 }

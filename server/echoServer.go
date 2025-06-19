@@ -7,6 +7,7 @@ import (
 	"lolymarsh/internal/repositories"
 	"lolymarsh/internal/route"
 	"lolymarsh/internal/services"
+	"lolymarsh/pkg/common"
 	"lolymarsh/pkg/configs"
 	"net/http"
 	"os"
@@ -52,15 +53,17 @@ func NewServer(conf *configs.Config, db *sqlx.DB) *Server {
 		c.JSON(http.StatusInternalServerError, map[string]string{"error": "internal server error"})
 	}
 
+	vali := common.InitValidate()
+
 	repo := repositories.NewRepository(db)
 
-	serv := services.NewService(conf, db, &repo)
+	serv := services.NewService(conf, db, repo)
 
-	hand := handlers.NewHandler(conf, &serv)
+	hand := handlers.NewHandler(conf, serv, vali)
 
 	mid := middlewares.NewMiddleware(conf)
 
-	route.NewRoute(conf, e, hand, mid)
+	route.NewRouter(e, hand, mid)
 
 	return &Server{conf: conf, app: e, db: db}
 }

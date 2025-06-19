@@ -1,10 +1,14 @@
 package route
 
-func (r *Route) UserRoute() {
+import (
+	"lolymarsh/internal/handlers"
+	"lolymarsh/internal/middlewares"
 
-	app := r.app
+	"github.com/labstack/echo/v4"
+)
 
-	_ = app
-	// app.GET("/users", r.Handler.GetUser)
+func authRoutes(app *echo.Echo, h *handlers.Handler, m *middlewares.Middleware) {
 
+	app.POST(API_V1+"/auth/register", h.RegisterUser)
+	app.POST(API_V1+"/auth/login", h.LoginUser)
 }

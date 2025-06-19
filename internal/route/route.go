@@ -3,18 +3,12 @@ package route
 import (
 	"lolymarsh/internal/handlers"
 	"lolymarsh/internal/middlewares"
-	"lolymarsh/pkg/configs"
 
 	"github.com/labstack/echo/v4"
 )
 
-type Route struct {
-	conf *configs.Config
-	app  *echo.Echo
-	h    *handlers.Handler
-	m    *middlewares.Middleware
-}
+const API_V1 = "/api/v1"
 
-func NewRoute(conf *configs.Config, app *echo.Echo, h *handlers.Handler, m *middlewares.Middleware) *Route {
-	return &Route{conf: conf, app: app, h: h, m: m}
+func NewRouter(app *echo.Echo, hand *handlers.Handler, midd *middlewares.Middleware) {
+	authRoutes(app, hand, midd)
 }

@@ -14,9 +14,9 @@ type ServiceAction interface {
 type service struct {
 	conf *configs.Config
 	db   *sqlx.DB
-	repo *repositories.RepositoryAction
+	repo repositories.RepositoryAction
 }
 
-func NewService(conf *configs.Config, db *sqlx.DB, repo *repositories.RepositoryAction) ServiceAction {
+func NewService(conf *configs.Config, db *sqlx.DB, repo repositories.RepositoryAction) ServiceAction {
 	return &service{conf: conf, db: db, repo: repo}
 }
