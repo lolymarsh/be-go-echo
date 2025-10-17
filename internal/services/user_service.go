@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -97,7 +96,7 @@ func (sv *Service) LoginUser(req *request.LoginRequest) (*entity.UserEntity, *st
 
 	authToken, err := sv.generateTokenAuth(getUser)
 	if err != nil {
-		return nil, nil, common.HandleErrorService("Login", fiber.StatusInternalServerError, "failed to generate token", err)
+		return nil, nil, common.HandleErrorService("Login", http.StatusInternalServerError, "failed to generate token", err)
 	}
 
 	getUser.Password = "********"
