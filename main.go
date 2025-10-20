@@ -16,6 +16,8 @@ func main() {
 		log.Fatalf("Failed to connect to the database: %v", err)
 	}
 
+	// test
+
 	srv := server.NewServer(conf, db)
 	if err := srv.Start(); err != nil {
 		log.Fatalf("Server start failed: %v", err)
