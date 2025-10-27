@@ -47,6 +47,7 @@ Contains all application-specific code that shouldn't be imported by other appli
   - Define request/response structures
   - Include validation tags
   - Group related DTOs in the same file
+  - Name format: `{resource}_request.go`
 
 #### `/internal/route`
 - **Purpose**: Route definitions
@@ -54,6 +55,7 @@ Contains all application-specific code that shouldn't be imported by other appli
   - Define API routes and their handlers
   - Group related routes together
   - Apply middlewares at the route level
+  - Name format: `{resource}_route.go`
 
 #### `/internal/services`
 - **Purpose**: Business logic layer
@@ -62,6 +64,13 @@ Contains all application-specific code that shouldn't be imported by other appli
   - Define service interfaces
   - Call repositories for data access
   - Name format: `{domain}_service.go`
+
+#### `/internal/repository`
+- **Purpose**: Data access layer
+- **Rules**:
+  - Interact with databases/external services
+  - Implement repository interfaces defined in services
+  - Name format: `{entity}_repository.go`
 
 ## Public Packages (`/pkg`)
 Contains packages that can be imported by other applications.
@@ -140,6 +149,13 @@ Contains packages that can be imported by other applications.
 - Keep dependencies to a minimum
 - Use Go modules for dependency management
 - Document any non-standard dependencies
+
+### API Response Standards  
+- Use consistent response format from `pkg/common/response.go`
+- Success response: `{ "status": "success", "message": "...", "data": {...} }`
+- Error response: `{ "status": "error", "message": "...", "error": {...} }`
+- Use appropriate HTTP status codes
+- Include request_id in responses for tracing
 
 ## Best Practices
 
